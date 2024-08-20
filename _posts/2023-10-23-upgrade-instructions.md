@@ -322,7 +322,7 @@ Last but not least the new docker image comes with **php 8.3** while 8.1 was use
             ...
 ```
 
-## from 1.4.6 to 1.4.7 (WIP) in docker deployment
+## from 1.4.6 to 1.4.7 in docker deployment
 
 The manticore index is moved to a seperate container. So you need to adjust your `docker-compose.yaml` file:
 
@@ -350,5 +350,14 @@ In order for the new docker container to pick up the existing data it's unix own
 ```
 chown -R 999:999 <your_piler_manticore_volume>
 ```
+Also be sure to update `/etc/piler/piler.conf` within the piler container, and set
+```
+sphxhost=manticore
+```
 
+Make sure your `/etc/piler/config-site.php` contains the following lines:
+```
+$config['SPHINX_HOSTNAME'] = 'manticore:9306';
+$config['SPHINX_HOSTNAME_READONLY'] = 'manticore:9307'
+```
 
